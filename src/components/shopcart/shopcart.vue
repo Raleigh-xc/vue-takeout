@@ -17,6 +17,15 @@
             </div>
         </div>
     </div>
+    <div class="ball-container">
+        <div v-for="(ball,index) in balls" :key="index">
+            <transition name="drop">
+                <div class="ball" v-show="ball.show">
+                    <div class="inner" ref="innerHook"></div>
+                </div>
+            </transition>
+        </div>
+    </div>
   </div>
 </template>
 <script>
@@ -41,6 +50,27 @@ export default {
             type: Number,
             default: 0
         }
+    },
+    data() {
+        return {
+            balls: [
+                {
+                    show: false
+                },
+                {
+                    show: false
+                },
+                {
+                    show: false
+                },
+                {
+                    show: false
+                },
+                {
+                    show: false
+                }
+            ]
+        };
     },
     computed: {
         totalPrice() {
@@ -74,6 +104,11 @@ export default {
             } else {
                 return 'enough';
             }
+        }
+    },
+    methods: {
+        drop(el) {
+            console.log(el);
         }
     }
 };
@@ -168,4 +203,17 @@ export default {
                     &.enough
                         background #00b400
                         color #fff
+        .ball-container
+            .ball
+                position fixed
+                left 32px
+                bottom 22px
+                z-index 200
+                transition: all 0.4s
+                .inner
+                    width 16px
+                    height 16px
+                    background rgb(0,160,220)
+                    border-radius 50%
+                    transition: all 0.4s
 </style>

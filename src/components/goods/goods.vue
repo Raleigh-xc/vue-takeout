@@ -29,7 +29,7 @@
                     <span class="now">￥{{food.price}}</span><span class="old" v-show="food.oldPrice">￥{{food.oldPrice}}</span>
                   </div>
                   <div class="cartcontrol-wrapper">
-                    <cartcontrol :food="food"></cartcontrol>
+                    <cartcontrol @add="addFood" :food="food"></cartcontrol>
                   </div>
                 </div>
               </li>
@@ -37,7 +37,7 @@
           </li>
         </ul>
       </div>
-      <shopcart :select-foods="selectedFoods" :min-price="seller.minPrice" :delivery-price="seller.deliveryPrice"></shopcart>
+      <shopcart ref="shopCart" :select-foods="selectedFoods" :min-price="seller.minPrice" :delivery-price="seller.deliveryPrice"></shopcart>
     </div>
   </div>
 </template>
@@ -108,6 +108,12 @@ export default{
       let el = foodList[index];
       this.foodsScroll.scrollToElement(el, 300);
       // console.log(index);
+    },
+    addFood(target) {
+      this._drop(target);
+    },
+    _drop(target) {
+      this.$refs.shopCart.drop(target);
     },
     _initScroll() {
       this.menuScroll = new BScorll(this.$refs.menuWrapper, {
