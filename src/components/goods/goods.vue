@@ -113,7 +113,10 @@ export default{
       this._drop(target);
     },
     _drop(target) {
-      this.$refs.shopCart.drop(target);
+      // 优化、异步执行下落动画
+      this.$nextTick(() => {
+        this.$refs.shopCart.drop(target);
+      });
     },
     _initScroll() {
       this.menuScroll = new BScorll(this.$refs.menuWrapper, {
