@@ -20,6 +20,7 @@
 import header from 'components/header/header.vue';
 
 const ERR_OK = 0;
+const debug = process.env.NODE_ENV !== 'production';
 
 export default {
   data() {
@@ -28,7 +29,8 @@ export default {
     };
   },
   created() {
-    this.$http.get('/api/seller').then((response) => {
+    const url = debug ? '/api/seller' : '../seller.json';
+    this.$http.get(url).then((response) => {
       response = response.body;
       if (response.errno === ERR_OK) {
         this.seller = response.data;

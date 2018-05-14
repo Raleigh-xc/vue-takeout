@@ -48,6 +48,7 @@ import shopcart from 'components/shopcart/shopcart';
 import cartcontrol from 'components/cartcontrol/cartcontrol';
 
 const ERR_OK = 0;
+const debug = process.env.NODE_ENV !== 'production';
 
 export default{
   props: {
@@ -87,7 +88,9 @@ export default{
   },
   created() {
     this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
-    this.$http.get('/api/goods').then((response) => {
+    
+    const url = debug ? '/api/goods' : '../goods.json';
+    this.$http.get(url).then((response) => {
       response = response.body;
       if (response.errno === ERR_OK) {
         this.goods = response.data;
